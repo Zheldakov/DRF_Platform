@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+from datetime import timedelta
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,12 +35,25 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # base apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # installed apps
+    'rest_framework',
+    'django_filter',  # безопасное способ фильтрации данных через удобные для человека urls
+    'rest_framework_simplejwt',  # авторизация по Токину (jason web token)
+    'corsheaders',  # ограничение доступа к ресурсам на домене
+    'drf_yasg',  # создание документации
+    'redis',
+
+    # project apps
+
+
 ]
 
 MIDDLEWARE = [
@@ -70,13 +87,28 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
+# Database указывает на работу с базой данных
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+# Меняем настройки ДБ (в данном примере MS SQL Server)
+load_dotenv()
+USER = os.getenv('MS_SQL_USER')
+PASSWORD = os.getenv('MS_SQL_KEY')
+HOST = os.getenv('MS_SQL_SERVER')
+DATABASE = os.getenv('MS_SQL_DATABASE')
+SU_DJANGO_PASSWORD = os.getenv('SU_DJANGO_PASSWORD')
+MS_SQL_DRIVER = os.getenv('MS_SQL_DRIVER')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'mssql',
+        'NAME': DATABASE,
+        'USER': USER,
+        'PASSWORD': PASSWORD,
+        'HOST': HOST,
+        'PORT': '',
+        'OPTIONS': {
+            'driver': MS_SQL_DRIVER
+        }
     }
 }
 
@@ -103,9 +135,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -116,8 +148,48 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = (
+        BASE_DIR / 'static',  # Путь к статическим файлам
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# добавлена авторизованая модель пользователя
+# AUTH_USER_MODEL = 'users.User'
+
+# Путь, куда попадают не авторизованные пользователи, при использовании функций для авторизованных пользователей
+LOGIN_URL = '/users/'
+
+# Размещение и активация КЕШа
+cache_status = os.getenv('CACHE_ENABLED')
+CACHE_ENABLED = cache_status
+if CACHE_ENABLED:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': os.getenv('CACHE_LOCATION'),
+        }
+    }
+
+    REST_FRAMEWORK = {
+        'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend',],
+        'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication',],
+        # 'DEFAULT_PERMISSION_CLASSES': ['rest_framework_permission.IsAuthenticated',],
+        'DEFAULT_PERMISSION_CLASSES': ['rest_framework_permission.AllowAny',],
+                }
+    SIMPLE_JWT ={
+        'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),
+        'REFRESH_TOKEN_LIFETIME': timedelta(minutes=30),
+    }
+
+    CORS_ALLOWED_ORIGINS = [
+        'https://read-only.exemple.com',
+        'https://read-and-write.exemple.com',
+    ]
+
+    CSRF_TRUSTED_ORIGINS = [
+        'https://read-and-write.exemple.com',
+    ]
