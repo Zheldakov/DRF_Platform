@@ -157,8 +157,8 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# добавлена авторизованая модель пользователя
-# AUTH_USER_MODEL = 'users.User'
+# добавлена авторизована модель пользователя
+AUTH_USER_MODEL = 'users.User'
 
 # Путь, куда попадают не авторизованные пользователи, при использовании функций для авторизованных пользователей
 LOGIN_URL = '/users/'
