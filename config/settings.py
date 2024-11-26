@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'redis',
 
     # project apps
-
+    'users',
 
 ]
 
