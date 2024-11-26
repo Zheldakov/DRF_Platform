@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 
     # installed apps
     'rest_framework',
-    'django_filter',  # безопасное способ фильтрации данных через удобные для человека urls
+    'django_filters',  # безопасное способ фильтрации данных через удобные для человека urls
     'rest_framework_simplejwt',  # авторизация по Токину (jason web token)
     'corsheaders',  # ограничение доступа к ресурсам на домене
     'drf_yasg',  # создание документации
