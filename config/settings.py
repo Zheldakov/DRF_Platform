@@ -181,7 +181,7 @@ if CACHE_ENABLED:
         'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend',],
         'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication',],
         # 'DEFAULT_PERMISSION_CLASSES': ['rest_framework_permission.IsAuthenticated',],
-        'DEFAULT_PERMISSION_CLASSES': ['rest_framework_permission.AllowAny',],
+        'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny',],
                 }
     SIMPLE_JWT ={
         'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),
