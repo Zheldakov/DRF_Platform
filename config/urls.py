@@ -26,6 +26,7 @@ urlpatterns = [
                   path('admin/', admin.site.urls),
 
                   # app urls
+                  path('',include("sections.urls", namespace='sections')),
                   path('users/', include('users.urls', namespace='users')),
 
                   # documentation urls
