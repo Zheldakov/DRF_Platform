@@ -37,7 +37,7 @@ class SectionDestroyAPIView(DestroyAPIView):
     queryset = Section.objects.all()
     permission_classes = [IsAuthenticated, IsAdminUser | IsModerator]
 
-class ContentAPIView(ListAPIView):
+class ContentListAPIView(ListAPIView):
     serializer_class = SectionContentSerializer
     queryset = SectionContent.objects.all()
     permission_classes = [IsAuthenticated]
