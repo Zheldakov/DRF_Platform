@@ -7,3 +7,6 @@ class SectionPaginator(PageNumberPagination):
 
 class SectionContentPaginator(SectionPaginator):
     page_size = 10
+
+class TestsPaginator(SectionPaginator):
+    page_size = 5
