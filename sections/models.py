@@ -31,7 +31,7 @@ class SectionContent(models.Model):
 class Tests(models.Model):
     test_section = models.ForeignKey(Section, on_delete=models.CASCADE, verbose_name="Test section")
     description = models.TextField(verbose_name='Test description', **NULLABLE)
-    questions = models.TextField(verbose_name='Question', **NULLABLE)
+    question = models.TextField(verbose_name='Question', **NULLABLE)
     answers = models.TextField(max_length=40,verbose_name='Answer', **NULLABLE)
 
     def __str__(self):
