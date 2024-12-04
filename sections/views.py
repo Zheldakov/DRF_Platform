@@ -70,20 +70,20 @@ class ContentUpdateAPIView(UpdateAPIView):
 class ContentDestroyAPIView(DestroyAPIView):
     serializer_class = SectionContentSerializer
     queryset = SectionContent.objects.all()
-    # pagination_class = [IsAuthenticated, IsAdminUser|IsModerator]
+    pagination_class = [IsAuthenticated, IsAdminUser|IsModerator]
 
 
 class TestListAPIView(ListAPIView):
     serializer_class = TestSerializer
     queryset = Tests.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 class TestQuestionRetrieveAPIView(RetrieveAPIView):
     serializer_class = TestQuestionSerializer
     queryset = Tests.objects.all()
 
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         answers = [tests.answer for test in Tests.objects.all()]

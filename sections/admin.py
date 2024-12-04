@@ -18,6 +18,6 @@ class ContentAdmin(admin.ModelAdmin):
 
 @admin.register(Tests)
 class TestsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'test_section', 'description', 'questions', 'answers')
+    list_display = ('id', 'test_section', 'description', 'question', 'answers')
     list_filter = ('id','test_section',)
     ordering = ('id', 'test_section',)
