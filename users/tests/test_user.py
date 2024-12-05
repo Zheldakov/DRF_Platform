@@ -25,16 +25,16 @@ class UserTestCase(APITestCase):
         data = {
             "email": "tester_create@test.com",
             "role": 'member',
-            "password": '123321',
+            "password": 'drftestweb320',
         }
         response = self.client.post('/user/create/', data, format='json')
         print(response.json())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.json()['email'], 'tester_create@test.com')
 
-    def test_users_create(self):
+    def test_users_delete(self):
         response = self.client.post('/users/3/delete')
-        print(response.json())
+        print(response)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_users_detail(self):
@@ -53,9 +53,11 @@ class UserTestCase(APITestCase):
     def test_user_update(self):
         data = {
             "email": "tester_update@test.com",
+            "password": 'qwerty',
 
         }
         response = self.client.patch('/users/5/update/', data=data)
         print(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()['email'], "tester_update@test.com")
 
