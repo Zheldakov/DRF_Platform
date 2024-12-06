@@ -7,9 +7,9 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from sections.models import Section, SectionContent, Tests
 from sections.permissioms import IsModerator
-from sections.searializers.section_searializers import SectionListSerializer, SectionSerializer
-from sections.searializers.section_content_searializers import SectionContentListSerializer, SectionContentSerializer
-from sections.searializers.tests_searilizers import TestSerializer, TestQuestionSerializer
+from sections.serializers.section_serializers import SectionListSerializer, SectionSerializer
+from sections.serializers.section_content_serializers import SectionContentListSerializer, SectionContentSerializer
+from sections.serializers.tests_searilizers import TestSerializer, TestQuestionSerializer
 from sections.paginators import SectionPaginator, SectionContentPaginator, TestsPaginator
 
 
