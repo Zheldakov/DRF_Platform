@@ -7,7 +7,7 @@ from users.tests.utils import get_admin_user
 class ContentTestCase(APITestCase):
     def setUp(self) -> None:
         self.admin_user = get_admin_user()
-        response = self.client.post('/user/token/', {"email": 'tester@test1.com', "password": 'qwerty'})
+        response = self.client.post('/users/token/', {"email": "tester@test1.com", "password": "qwerty"})
         self.access_token = response.json().get("access")
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
         self.test_section = Section.objects.create(

@@ -13,7 +13,7 @@ class UserTestCase(APITestCase):
     def setUp(self) -> None:
         # Базовые настройки
         self.admin_user = get_admin_user()
-        response = self.client.post('/users/token/', {"email":'tester@test1.com', "password":'qwerty'})
+        response = self.client.post('/users/token/', {"email":"tester@test1.com", "password":"qwerty"})
         self.access_token = response.json().get("access")
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
     """
