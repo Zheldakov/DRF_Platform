@@ -27,7 +27,7 @@ class UserTestCase(APITestCase):
             "password": 'drftestweb320',
         }
         response = self.client.post('/user/create/', data, format='json')
-        print(response.json())
+        # print(response.json())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.json()['email'], 'tester_create@test.com')
 

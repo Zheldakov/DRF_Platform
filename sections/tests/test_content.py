@@ -8,11 +8,11 @@ class ContentTestCase(APITestCase):
     def setUp(self) -> None:
         self.admin_user = get_admin_user()
         response = self.client.post('/user/token/', {"email": 'tester@test1.com', "password": 'qwerty'})
-        self.access_token = response.json.get('access')
+        self.access_token = response.json().get("access")
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
         self.test_section = Section.objects.create(
             title='test_section',
-            discription='test_description'
+            description='test_description'
         )
         self.test_content = SectionContent.objects.create(
             section=self.test_section,
@@ -33,7 +33,7 @@ class ContentTestCase(APITestCase):
 
     def test_content_delete(self):
         response = self.client.delete(f'/content/3/delete/')
-        print(response.json())
+        print(response)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_content_detail(self):
