@@ -8,8 +8,8 @@ from users.tests.utils import get_admin_user
 class SectionTestCase(APITestCase):
     def setUp(self):
         self.admin_user = get_admin_user()
-        response = self.client.post('/user/token/', {"email": 'tester@test1.com', "password": 'qwerty'})
-        self.access_token = response.json.get('access')
+        response = self.client.post('/users/token/', {"email": "tester@test1.com", "password": "qwerty"})
+        self.access_token = response.json().get("access")
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
         self.test_section = Section.objects.create(
             title='test_section',
@@ -19,7 +19,7 @@ class SectionTestCase(APITestCase):
     def test_section_create(self):
         data = {
             'title': 'test_section_create',
-            'discription': 'test_section_description_create'
+            'description': 'test_section_description_create'
         }
         response = self.client.post('/section/create', data=data)
         print(response.json())
@@ -43,4 +43,4 @@ class SectionTestCase(APITestCase):
         print(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()[0]['title'], 'test_section')
-        self.assertEqual(response.json()[0]['description'], 'test_description_зге')
+        self.assertEqual(response.json()[0]['description'], 'test_description_pue')
