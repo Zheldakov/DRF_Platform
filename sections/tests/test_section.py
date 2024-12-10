@@ -13,7 +13,7 @@ class SectionTestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
         self.test_section = Section.objects.create(
             title='test_section',
-            discription='test_description'
+            dscription='test_description'
         )
 
     def test_section_create(self):
