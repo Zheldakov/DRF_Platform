@@ -9,9 +9,9 @@ from users.tests.utils import get_member_user
 class UserTestCase(APITestCase):
     def setUp(self) -> None:
         self.user = get_member_user()
-        response = self.client.post('/users/token/',{'email':'tester_member@test1.com','password':'qwerty'})
-        self.access_token = response.json().get('access')
-        self.client.credentials(HTTP_AUTHORIZATION='Bearer'+self.access_token)
+        response = self.client.post('/users/token/',{"email":"tester_member@test1.com","password":"qwerty"})
+        self.access_token = response.json().get("access")
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.access_token}')
 
     def test_user_delete(self):
         response = self.client.delete('/users/16/delete')
