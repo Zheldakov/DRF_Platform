@@ -21,26 +21,48 @@ class SectionTestCase(APITestCase):
             'title': 'test_section_create',
             'description': 'test_section_description_create'
         }
-        response = self.client.post('/section/create', data=data)
-        # print(response.json())
+        response = self.client.post('/section/create/', data=data)
+        print(response.json())
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.json()['title'], 'test_section_create')
+    def test_section_create(self):
+        data = {
+            'title': 'test_section_create',
+            'description': 'test_section_description_create'
+        }
+        response = self.client.post('/section/create/', data=data)
+        print(response.json())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.json()['title'], 'test_section_create')
 
-    def test_section_delete(self):
-        response = self.client.delete(f'/section/3/delete/')
-        print(response)
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-
     def test_section_detail(self):
-        response = self.client.get(f'/section/4/')
-        print(response.json())
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()['title'], 'test_section')
-        self.assertEqual(response.json()['description'], 'test_description')
+            response = self.client.get(f'/section/{self.test_section.id}/')
+            print(response.json())
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(response.json()['title'], 'test_section')
+            self.assertEqual(response.json()['description'], 'test_description')
+
+
 
     def test_section_list(self):
         response = self.client.get('/section/')
         print(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # self.assertEqual(response.json()[0]['title'], 'test_section')
-        # self.assertEqual(response.json()[0]['description'], 'test_description_pue')
+        self.assertEqual(response.json()['results'][0]['title'], 'test_section')
+        self.assertEqual(response.json()['results'][0]['description'], 'test_description')
+
+    def test_section_update(self):
+        data = {
+            'title': 'test_section_put',
+            'description': 'test_description_put',
+        }
+        response = self.client.put(f'/section/{self.test_section.id}/update/', data=data)
+        print(response.json())
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()['title'], 'test_section_put')
+        self.assertEqual(response.json()['description'], 'test_description_put')
+
+    def test_section_delete(self):
+        response = self.client.delete(f'/section/3/delete/')
+        print(response)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
