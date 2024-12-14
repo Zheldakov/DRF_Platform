@@ -56,7 +56,7 @@ class ContentCreateAPIView(CreateAPIView):
 
 
 class ContentRetrieveAPIView(RetrieveAPIView):
-    serializer_class = SectionSerializer
+    serializer_class = SectionContentSerializer
     queryset = SectionContent.objects.all()
     permission_classes = [IsAuthenticated]
 
@@ -86,7 +86,7 @@ class TestQuestionRetrieveAPIView(RetrieveAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        answers = [tests.answer for test in Tests.objects.all()]
+        answers = [test.answer for test in Tests.objects.all()]
         answer = answers[self.kwargs.get('pk') - 1].lower()
         user_answer = request.data.get('user_answer').lower()
         is_correct = user_answer == answer
