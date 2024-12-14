@@ -54,13 +54,13 @@ class ContentTestCase(APITestCase):
 
     def test_content_update(self):
         data = {
-            'section':self.test_content.id,
+            'section':self.test_section.id,
             'title': 'test_content_put',
             'content': 'test_content_description_put',
         }
         response = self.client.put( f'/content/{self.test_content.id}/update/', data=data)
         print(response.json())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()['section'], self.test_content.id)
+        self.assertEqual(response.json()['section'], self.test_section.id)
         self.assertEqual(response.json()['title'], 'test_content_put')
         self.assertEqual(response.json()['content'], 'test_content_description_put')
